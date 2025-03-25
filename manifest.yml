@@ -49,3 +49,4 @@ permissions:
     - read:organization.user:jira-service-management
     - write:organization.user:jira-service-management
     - read:servicedesk.customer:jira-service-management
+    
