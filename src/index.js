@@ -1,2 +1,1 @@
-export { handler } from './resolvers';
-
+export { getUsersByIssueKey } from './resolvers';

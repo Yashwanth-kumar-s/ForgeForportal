@@ -3,19 +3,19 @@ modules:
     - key: portalmenu-dropdown-action
       resource: main
       resolver:
-        function: resolver
+        function: getUsersByIssueKey
       render: native
       title: Portal Dropdown
   function:
-    - key: resolver
-      handler: index.handler
+    - key: getUsersByIssueKey
+      handler: index.getUsersByIssueKey
 resources:
   - key: main
     path: src/frontend/index.jsx
 app:
   runtime:
     name: nodejs22.x
-  id: ari:cloud:ecosystem::app/aed656c4-2efa-485f-8915-d46a62abd42c
+  id: ari:cloud:ecosystem::app/4e13b13d-69ce-4207-95e5-835360c3713e
 
 permissions:
   scopes:
@@ -49,4 +49,3 @@ permissions:
     - read:organization.user:jira-service-management
     - write:organization.user:jira-service-management
     - read:servicedesk.customer:jira-service-management
-    

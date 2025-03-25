@@ -10,16 +10,17 @@ const PortalDropdown = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const users = await invoke('getUsersByIssueKey', {});
+        const users = await invoke('getUsersByIssueKey', {}); // Ensure function name matches manifest
         console.log('Fetched users for dropdown:', users);
 
-        // Format the data for the dropdown
-        const formattedOptions = users.map((user) => ({
-          label: user.label, // Display name of the user
-          value: user.value, // Account ID of the user
-        }));
+        // Ensure the response is correctly parsed
+        const parsedUsers = typeof users === 'string' ? JSON.parse(users) : users;
 
-        setDropdownOptions(formattedOptions);
+        if (!Array.isArray(parsedUsers)) {
+          throw new Error('Invalid data format received');
+        }
+
+        setDropdownOptions(parsedUsers);
       } catch (error) {
         console.error('Error fetching users:', error);
       } finally {
@@ -30,25 +31,14 @@ const PortalDropdown = () => {
     fetchUsers();
   }, []);
 
-  const handleSelectionChange = (value) => {
-    setSelectedValue(value);
-    console.log('Selected Value:', value);
-  };
-
   return (
     <>
       <Text>Select a User:</Text>
-      <Select
-        label="Users"
-        onChange={handleSelectionChange}
-        value={selectedValue}
-        isLoading={isLoading}
-      >
+      <Select label="Users" isLoading={isLoading}>
         {dropdownOptions.map((option, index) => (
-          <Option key={index} label={option.label} value={option.value} />
+          <Option key={index} label={option.label} value={option.label} />
         ))}
       </Select>
-      {selectedValue && <Text>You selected: {selectedValue}</Text>}
     </>
   );
 };
